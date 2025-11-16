@@ -4,54 +4,57 @@
     <meta charset="UTF-8">
     <title>@yield('title') - Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Bootstrap & FontAwesome -->
-    <link rel="stylesheet" href="{{ asset('bootstrap1/css/bootstrap.min.css') }}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.bootstrap5.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.bootstrap5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="{{ asset('asset/fontawesome-free-6.7.2-web/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('style.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <style>
         body {
             background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
         }
 
         .sidebar {
             height: 100vh;
             width: 220px;
-            background-color: #343a40;
             position: fixed;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
+            background-color: #343a40;
             padding-top: 20px;
         }
 
         .sidebar a {
-            color: #ffffff;
-            text-decoration: none;
             display: block;
             padding: 12px 20px;
-            transition: all 0.3s;
+            color: #fff;
+            text-decoration: none;
         }
 
         .sidebar a:hover {
-            background-color: #ffffff;
+            background: #fff;
             color: #343a40;
         }
 
-        .sidebar .active {
-            background-color: #495057;
-        }
-
-        .sidebar .sidebar-header {
+        .sidebar-header {
             text-align: center;
-            color: white;
             font-size: 1.4rem;
             font-weight: bold;
+            color: #fff;
             margin-bottom: 1rem;
         }
 
@@ -61,16 +64,11 @@
         }
 
         .navbar-top {
-            background-color: #ffffff;
-            border-bottom: 1px solid #dee2e6;
+            background: #fff;
             padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar-top h4 {
-            margin: 0;
         }
     </style>
 </head>
@@ -79,18 +77,19 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <i class="fa-solid fa-user-shield"></i> Admin dashboard
+            <i class="fa-solid fa-user-shield"></i> Admin Panel
         </div>
-        <a href="#"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="#"><i class="fa-solid fa-users"></i> Users</a>
+        <a href="{{route('admin.dashboard')}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="{{ route('admin.useradmin') }}"><i class="fa-solid fa-users"></i> Users</a>
         <a href="#"><i class="fa-solid fa-box"></i> Products</a>
-        <a href="#"><i class="fa-solid fa-chart-line"></i> Reports</a>
-        <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
-        <a href="#" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        <a href="#"><i class="fa-solid fa-chart-line"></i> toko</a>
+        <a href="{{route('admin.kategori')}}"><i class="fa-solid fa-gear"></i> kategori</a>
+        <a href="{{route('logout')}}" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
 
-    <!-- Main Content -->
+    <!-- Tempat Konten Utama -->
     <div class="main-content">
+
         <div class="navbar-top">
             <h4>@yield('title')</h4>
             <div>
@@ -102,6 +101,7 @@
         <div class="container mt-4">
             @yield('content')
         </div>
+
     </div>
 
 </body>

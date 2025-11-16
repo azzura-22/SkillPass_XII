@@ -2,12 +2,103 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class adminController extends Controller
 {
     //
     public function dashboard(){
-        return view('admin.dashboard');
+        $data['users'] = User::count();
+        return view('admin.dashboard',$data);
+    }
+    public function userA(){
+        $data['users'] = User::all();
+        return view('admin.useradmin',$data);
+    }
+    public function loginView(){
+        return view('login');
+    }
+
+    public function login(Request $request)
+    {
+    $request->validate([
+        'username' => 'required',
+        'password' => 'required'
+    ]);
+
+    if (Auth::attempt($request->only('username', 'password'))) {
+
+        $role = Auth::user()->role;
+        if ($role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($role === 'user') {
+            return redirect()->route('user.dashboard');
+        }
+        return redirect()->route('login')->with('error', 'Role tidak dikenal.');
+    }
+    return back()->with('error', 'Email atau password salah.');
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
+    }
+    public function regisview(){
+        return view('regis');
+    }
+    public function register(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'kontak' => 'required|string|max:15',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required|string',
+        ]);
+        User::create([
+            'name' => $request->name,
+            'kontak' => $request->kontak,
+            'username' => $request->username,
+            'role' => 'member',
+            'password' => bcrypt($request->password),
+        ]);
+        return redirect()->route('login')->with('succsess','registrasi berhasil,silahkan login');
+    }
+    public function addmember(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'kontak' => 'required|string|max:15',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required|string',
+            'role' => 'required'
+        ]);
+        User::create([
+            'name' => $request->name,
+            'kontak' => $request->kontak,
+            'username' => $request->username,
+            'role' => $request->role,
+            'password' => bcrypt($request->password),
+        ]);
+        return redirect()->back()->with('succsess','member berhasil di tambah');
+    }
+    public function updateMember(Request $req)
+    {
+    User::where('id', $req->id)->update([
+        'name' => $req->name,
+        'kontak' => $req->kontak,
+        'username' => $req->username,
+        'role' => $req->role,
+    ]);
+
+        return back()->with('succsess','Member berhasil diperbarui!');
+    }
+    public function deleteMember($id)
+    {
+        User::find($id)->delete();
+
+        return back()->with('succsess','Member berhasil dihapus!');
     }
 }
