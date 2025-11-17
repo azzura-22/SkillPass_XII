@@ -50,6 +50,11 @@
             color: #343a40;
         }
 
+        .sidebar .nav-link.active {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
         .sidebar-header {
             text-align: center;
             font-size: 1.4rem;
@@ -79,11 +84,11 @@
         <div class="sidebar-header">
             <i class="fa-solid fa-user-shield"></i> Admin Panel
         </div>
-        <a href="{{route('admin.dashboard')}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="{{ route('admin.useradmin') }}"><i class="fa-solid fa-users"></i> Users</a>
+        <a href="{{route('admin.dashboard')}}" class="nav-link {{request()->routeIs('admin.dashboard') ? 'active' : ''}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="{{ route('admin.useradmin') }} " class="nav-link {{request()->routeIs('admin.useradmin') ? 'active' : ''}}"><i class="fa-solid fa-users"></i> Users</a>
         <a href="#"><i class="fa-solid fa-box"></i> Products</a>
-        <a href="#"><i class="fa-solid fa-chart-line"></i> toko</a>
-        <a href="{{route('admin.kategori')}}"><i class="fa-solid fa-gear"></i> kategori</a>
+        <a href="{{route('admin.toko.index')}}" class="nav-link {{request()->routeIs('admin.toko.index') ? 'active' : ''}}"><i class="fa-solid fa-chart-line"></i> toko</a>
+        <a href="{{route('admin.kategori')}}" class="nav-link {{request()->routeIs('admin.kategori') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> kategori</a>
         <a href="{{route('logout')}}" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
 
