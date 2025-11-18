@@ -20,8 +20,8 @@ class AuthUser
             if(Auth::user()->role == 'member'){
                 return $next($request);
             }
-            return redirect('/');
+            return redirect('/login');
         }
-        return redirect('/');
+        return redirect('/login');
     }
 }

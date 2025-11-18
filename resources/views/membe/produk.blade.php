@@ -1,0 +1,242 @@
+@extends('membe.tamplate')
+
+@section('content')
+
+<style>
+    #produkTable thead th {
+        color: #000 !important;
+        background-color: #f8f9fa !important;
+        font-weight: bold;
+    }
+</style>
+
+<div class="card">
+
+    {{-- Alert sukses --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Sukses!</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Data Produk</h5>
+
+        {{-- Tombol membuka modal tambah --}}
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProdukModal">
+            + Tambah Produk
+        </button>
+    </div>
+
+    <div class="card-body">
+
+        <table id="produkTable" class="table table-striped table-bordered nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Gambar</th>
+                    <th>Nama Produk</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($produks as $p)
+                <tr>
+                    <td>{{ $p->id }}</td>
+                   <td>
+                        @if ($p->Gambar->first())
+                            <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}"
+                                width="60" height="60" class="rounded">
+                        @else
+                            <span class="text-muted">Tidak ada gambar</span>
+                        @endif
+                    </td>
+                    <td>{{ $p->nama_produk }}</td>
+                    <td>Rp {{ number_format($p->harga_produk,0,',','.') }}</td>
+                    <td>{{ $p->stok }}</td>
+                    <td>{{ $p->kategori->nama_katgori }}</td>
+                    <td>
+
+                        {{-- EDIT --}}
+                        <button
+                            class="btn btn-warning btnEdit"
+                            data-id="{{ $p->id }}"
+                            data-nama="{{ $p->nama_produk }}"
+                            data-harga="{{ $p->harga_produk }}"
+                            data-stok="{{ $p->stok }}"
+                            data-deskripsi="{{ $p->deskripsi_produk }}"
+                            data-kategori="{{ $p->kategori_id }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editProdukModal">
+                            Edit
+                        </button>
+
+                        {{-- HAPUS --}}
+                        <a href="{{route('produk.delete',$p->id)}}"
+                           class="btn btn-danger"
+                           onclick="return confirm('Yakin ingin menghapus produk ini?')">
+                           Hapus
+                        </a>
+
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+{{-- ---------------------- MODAL ADD PRODUK ---------------------- --}}
+<div class="modal fade" id="addProdukModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Tambah Produk</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="{{route('produk.store')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label>Nama Produk</label>
+                <input type="text" name="nama_produk" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Harga Produk</label>
+                <input type="number" name="harga_produk" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Stok</label>
+                <input type="number" name="stok" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Kategori</label>
+                <select name="kategori_id" class="form-control" required>
+                    @foreach($kategori as $k)
+                        <option value="{{ $k->id }}">{{ $k->nama_katgori }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Deskripsi Produk</label>
+                <textarea name="deskripsi_produk" class="form-control" rows="3" required></textarea>
+            </div>
+
+            {{-- PERUBAHAN UNTUK GAMBAR MULTIPLE --}}
+            <div class="mb-3">
+                <label>Gambar Produk</label>
+                <input type="file" name="gambar_produk[]" class="form-control" multiple required>
+                <small class="text-muted">Bisa upload lebih dari 1 gambar.</small>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{{-- ---------------------- MODAL EDIT PRODUK ---------------------- --}}
+<div class="modal fade" id="editProdukModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Produk</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="{{route('produk.update')}}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <input type="hidden" name="id" id="edit_id">
+
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label>Nama Produk</label>
+                <input type="text" name="nama_produk" id="edit_nama" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Harga Produk</label>
+                <input type="number" name="harga_produk" id="edit_harga" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Stok</label>
+                <input type="number" name="stok" id="edit_stok" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Kategori</label>
+                <select name="kategori_id" id="edit_kategori" class="form-control" required>
+                    @foreach($kategori as $k)
+                        <option value="{{ $k->id }}">{{ $k->nama_katgori }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Deskripsi Produk</label>
+                <textarea name="deskripsi_produk" id="edit_deskripsi" class="form-control" rows="3" required></textarea>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+$(document).ready(function () {
+    $('#produkTable').DataTable();
+
+    // FILL EDIT MODAL
+    $('.btnEdit').on('click', function() {
+
+        $('#edit_id').val($(this).data('id'));
+        $('#edit_nama').val($(this).data('nama'));
+        $('#edit_harga').val($(this).data('harga'));
+        $('#edit_stok').val($(this).data('stok'));
+        $('#edit_deskripsi').val($(this).data('deskripsi'));
+        $('#edit_kategori').val($(this).data('kategori'));
+
+    });
+});
+</script>
+
+@endsection

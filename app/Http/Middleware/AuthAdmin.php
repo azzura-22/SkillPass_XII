@@ -20,8 +20,8 @@ class AuthAdmin
             if(Auth::user()->role == 'admin'){
                 return $next($request);
             }
-            return redirect('/');
+            return redirect('/login');
         }
-        return redirect('/');
+        return redirect('/login');
     }
 }

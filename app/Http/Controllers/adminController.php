@@ -37,8 +37,8 @@ class adminController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        if ($role === 'user') {
-            return redirect()->route('user.dashboard');
+        if ($role === 'member') {
+            return redirect()->route('member.dahboard');
         }
         return redirect()->route('login')->with('error', 'Role tidak dikenal.');
     }
@@ -91,6 +91,7 @@ class adminController extends Controller
         'name' => $req->name,
         'kontak' => $req->kontak,
         'username' => $req->username,
+        'password' => bcrypt($req->password),
         'role' => $req->role,
     ]);
 

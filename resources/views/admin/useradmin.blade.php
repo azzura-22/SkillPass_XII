@@ -61,6 +61,7 @@
                             data-id="{{ $u->id }}"
                             data-name="{{ $u->name }}"
                             data-kontak="{{ $u->kontak }}"
+                            data-password="{{$u->password}}"
                             data-username="{{ $u->username }}"
                             data-role="{{ $u->role }}"
                             data-bs-toggle="modal"
@@ -174,6 +175,11 @@
             </div>
 
             <div class="mb-3">
+                <label>Password</label>
+                <input type="text" name="password" id="edit_password" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
                 <label>Role</label>
                 <select name="role" id="edit_role" class="form-control">
                     <option value="member">Member</option>
@@ -206,6 +212,7 @@ $(document).ready(function () {
 
         // Ambil data dari atribut tombol edit
         $('#edit_id').val($(this).data('id'));
+        $('#edit_password').val($(this).data('password'))
         $('#edit_name').val($(this).data('name'));
         $('#edit_kontak').val($(this).data('kontak'));
         $('#edit_username').val($(this).data('username'));

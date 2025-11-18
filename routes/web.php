@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\memberController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
@@ -28,6 +30,11 @@ Route::middleware(['admin'])->group(function () {
     Route::put('/admin/toko/update', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/delete/{id}', [TokoController::class, 'delete'])->name('admin.toko.delete');
 });
-Route::middleware(['user'])->group(function(){
+Route::middleware(['member'])->group(function(){
+    Route::get('/member/dashboard',[memberController::class,'dashboard'])->name('member.dahboard');
+    Route::post('/member/produk/store',[ProdukController::class,'store'])->name('produk.store');
+    Route::get('/member/prodak',[memberController::class,'produk'])->name('member.prodak');
+    Route::put('member/produk/update',[ProdukController::class,'update'])->name('produk.update');
+    Route::get('/member/delete/{id}',[ProdukController::class,'destroy'])->name('produk.delete');
     Route::get('/logout/user',[adminController::class,'logout'])->name('logout.user');
 });

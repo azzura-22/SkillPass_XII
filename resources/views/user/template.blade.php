@@ -36,7 +36,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Kategori</a>
+                    <a class="nav-link" href="#">Toko</a>
                 </li>
 
             </ul>
@@ -45,29 +45,10 @@
             <ul class="navbar-nav ms-auto">
 
                 {{-- Jika User Login --}}
-                @if(session()->has('user'))
-
-                    <li class="nav-item">
-                        <span class="nav-link">
-                            Halo, {{ session('user')->nama }}
-                        </span>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('logout.user') }}" class="nav-link text-warning">
-                            Logout
-                        </a>
-                    </li>
-
-                {{-- Jika Belum Login --}}
-                @else
                     <li class="nav-item">
                         <a href="{{ route('login') }}" class="nav-link">Login</a>
                     </li>
-                @endif
-
             </ul>
-
         </div>
     </div>
 </nav>

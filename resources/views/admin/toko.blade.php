@@ -61,6 +61,7 @@
                             data-id="{{ $t->id }}"
                             data-nama="{{ $t->nama_toko }}"
                             data-deskripsi="{{ $t->deskripsi }}"
+                            data-status="{{ $t->status}}"
                             data-gambar="{{ $t->gambar }}"
                             data-user="{{ $t->user_id }}"
                             data-kontak="{{ $t->kontak_toko }}"
