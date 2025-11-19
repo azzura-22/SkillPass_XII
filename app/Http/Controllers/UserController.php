@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     //
     public function memberHome(){
-        $data['tokos'] = Toko::latest()->take(9)->get();
+        $data['tokos'] = Toko::latest()->where('status','active')->take(9)->get();
         $data['produks'] = Produk::with('toko', 'kategori')->latest()->get();
         return view('user.home',$data);
     }

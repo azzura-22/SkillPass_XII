@@ -10,6 +10,10 @@
     }
 </style>
 
+@php
+    $toko = Auth::user()->Toko;
+@endphp
+
 <div class="card">
 
     {{-- Alert sukses --}}
@@ -19,14 +23,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
-
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Data Produk</h5>
-
+        @if ($toko == null || $toko->status != 'active')
         {{-- Tombol membuka modal tambah --}}
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProdukModal">
             + Tambah Produk
         </button>
+        @endif
     </div>
 
     <div class="card-body">
@@ -49,13 +53,17 @@
                 <tr>
                     <td>{{ $p->id }}</td>
                    <td>
-                        @if ($p->Gambar->first())
-                            <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}"
-                                width="60" height="60" class="rounded">
+                        @if ($p->Gambar->count() > 0)
+                        @foreach ($p->Gambar->take(4) as $g)
+                            <img src="{{ asset('storage/imageproduk/'.$g->path_gambar) }}"
+                                    width="60" height="60"
+                                    class="rounded me-1 mb-1">
+                        @endforeach
                         @else
                             <span class="text-muted">Tidak ada gambar</span>
                         @endif
                     </td>
+
                     <td>{{ $p->nama_produk }}</td>
                     <td>Rp {{ number_format($p->harga_produk,0,',','.') }}</td>
                     <td>{{ $p->stok }}</td>

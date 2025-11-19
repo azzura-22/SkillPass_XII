@@ -98,8 +98,8 @@
         <div class="navbar-top">
             <h4>@yield('title')</h4>
             <div>
-                <i class="fa-solid fa-bell"></i>
-                <i class="fa-solid fa-user ms-3"></i>
+                {{-- <i class="fa-solid fa-bell"></i>
+                <i class="fa-solid fa-user ms-3"></i> --}}
             </div>
         </div>
 

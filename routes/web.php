@@ -36,5 +36,7 @@ Route::middleware(['member'])->group(function(){
     Route::get('/member/prodak',[memberController::class,'produk'])->name('member.prodak');
     Route::put('member/produk/update',[ProdukController::class,'update'])->name('produk.update');
     Route::get('/member/delete/{id}',[ProdukController::class,'destroy'])->name('produk.delete');
+    Route::post('/member/toko/store',[memberController::class,'store'])->name('member.toko.store');
+    Route::put('/member/toko/update/',[memberController::class,'update'])->name('member.toko.update');
     Route::get('/logout/user',[adminController::class,'logout'])->name('logout.user');
 });

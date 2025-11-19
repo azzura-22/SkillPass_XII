@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'nama_toko' => 'Kurumi Store',
             'alamat' => 'Jl. Anggrek No. 23',
+            'status' => 'active',
             'gambar' => 'public/storage/image/sekolah1.jpg',
             'deskripsi' => 'Toko resmi Kurumi Store menjual berbagai kebutuhan rumah tangga dan elektronik.',
             'kontak_toko' => '0870779797',
