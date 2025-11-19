@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gambar;
+use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\Toko;
 use App\Models\User;
@@ -109,5 +110,12 @@ class adminController extends Controller
         User::find($id)->delete();
 
         return back()->with('succsess','Member berhasil dihapus!');
+    }
+    public function edit($id)
+    {
+        $kategoriEdit = Kategori::findOrFail($id);
+        $kategori = Kategori::all();
+
+        return view('admin.kategori', compact('kategori', 'kategoriEdit'));
     }
 }

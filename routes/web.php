@@ -30,6 +30,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/toko/store', [TokoController::class, 'store'])->name('admin.toko.store');
     Route::put('/admin/toko/update', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/delete/{id}', [TokoController::class, 'delete'])->name('admin.toko.delete');
+    Route::get('/edit/{id}', [adminController::class, 'edit'])->name('admin.kategori.edit');
     Route::post('/admin/toko/approve/{id}', [TokoController::class, 'approve'])->name('member.approve.toko');
 });
 Route::middleware(['member'])->group(function(){

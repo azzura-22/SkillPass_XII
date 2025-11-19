@@ -35,6 +35,8 @@
             height: 100vh;
             width: 220px;
             position: fixed;
+            top: 0;
+            left: 0;
             background-color: #343a40;
             padding-top: 20px;
         }
@@ -67,14 +69,20 @@
         .main-content {
             margin-left: 220px;
             padding: 20px;
+            padding-top: 70px;
         }
 
         .navbar-top {
+            position: fixed;
+            top: 0;
+            left: 220px;
+            right: 0;
             background: #fff;
             padding: 10px 20px;
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -85,8 +93,8 @@
         <div class="sidebar-header">
             <i class="fa-solid fa-user-shield"></i> Member Panel
         </div>
-        <a href="{{route('member.dahboard')}}" class="nav-link {{request()->routeIs('admin.dashboard') ? 'active' : ''}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="{{route('member.prodak')}}"><i class="fa-solid fa-box"></i> Products</a>
+        <a href="{{route('member.dahboard')}}" class="nav-link {{request()->routeIs('member.dahboard') ? 'active' : ''}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="{{route('member.prodak')}}" class="nav-link {{request()->routeIs('member.prodak') ? 'active' : ''}}"><i class="fa-solid fa-box"></i> Products</a>
         {{-- <a href="{{route('admin.toko.index')}}" class="nav-link {{request()->routeIs('admin.toko.index') ? 'active' : ''}}"><i class="fa-solid fa-chart-line"></i> toko</a>
         <a href="{{route('admin.kategori')}}" class="nav-link {{request()->routeIs('admin.kategori') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> kategori</a> --}}
         <a href="{{route('member.gambar')}}" class="nav-link {{request()->routeIs('member.gambar') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> gambar</a>

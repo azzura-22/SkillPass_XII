@@ -2,7 +2,6 @@
 @section('title', 'Dashboard Member')
 
 @section('content')
-@csrf
 
 <div class="container mt-4">
 
@@ -15,93 +14,93 @@
 
     {{-- Jika belum punya toko --}}
     @if (!$toko)
-    <div class="card shadow">
-        <div class="card-body text-center">
+        <div class="card shadow">
+            <div class="card-body text-center">
 
-            <h4 class="fw-bold">Anda Belum Memiliki Toko</h4>
-            <p class="text-muted">Silakan buat toko untuk mulai menjual produk Anda.</p>
+                <h4 class="fw-bold">Anda Belum Memiliki Toko</h4>
+                <p class="text-muted">Silakan buat toko untuk mulai menjual produk Anda.</p>
 
-            <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#createTokoModal">
-                + Buat Toko
-            </button>
+                <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#createTokoModal">
+                    + Buat Toko
+                </button>
 
+            </div>
         </div>
-    </div>
+
     @elseif ($toko && $toko->status == 'pending')
-    <div>
+
         <div class="alert alert-info mt-3" role="alert">
-            <strong>Info:</strong> Toko Anda sedang dalam proses verifikasi. Mohon tunggu hingga status toko Anda diubah menjadi "active" oleh admin.
+            <strong>Info:</strong> Toko Anda sedang dalam proses verifikasi.
         </div>
-    </div>
+
     @else
-    {{-- Profil Toko --}}
-    <div class="card shadow mb-4">
-        <div class="card-body d-flex align-items-center justify-content-between">
 
-            <div class="d-flex">
-                <div class="me-3">
-                    @if ($toko->gambar)
-                        <img src="{{ asset('storage/image/'.$toko->gambar) }}"
-                             width="100" height="100" class="rounded-circle shadow">
-                    @else
-                        <img src="https://via.placeholder.com/100"
-                             class="rounded-circle shadow">
-                    @endif
-                </div>
+        {{-- Profil Toko --}}
+        <div class="card shadow mb-4">
+            <div class="card-body d-flex align-items-center justify-content-between">
 
-                <div>
-                    <h4 class="fw-bold mb-1">{{ $toko->nama_toko }}</h4>
-                    <p class="text-muted mb-0" style="max-width: 500px;">
-                        {{ $toko->deskripsi }}
-                    </p>
-                </div>
-            </div>
+                <div class="d-flex">
+                    <div class="me-3">
+                        @if ($toko->gambar)
+                            <img src="{{ asset('storage/image/'.$toko->gambar) }}"
+                                 width="100" height="100" class="rounded-circle shadow">
+                        @else
+                            <img src="https://via.placeholder.com/100" class="rounded-circle shadow">
+                        @endif
+                    </div>
 
-            <button class="btn btn-warning btnEditToko"
-                data-id="{{ $toko->id }}"
-                data-nama="{{ $toko->nama_toko }}"
-                data-deskripsi="{{ $toko->deskripsi }}"
-                data-bs-toggle="modal"
-                data-bs-target="#EditToko">
-                Edit Toko
-            </button>
-
-        </div>
-    </div>
-
-    {{-- Statistik --}}
-    <div class="row">
-
-        <div class="col-md-4">
-            <div class="card text-white bg-primary shadow mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Jumlah Produk</h5>
-                    <h2>{{ $jumlahProduk }}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card text-white bg-success shadow mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Total Gambar Produk</h5>
-                    <h2>{{ $jumlahGambar }}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <a href="#" class="text-decoration-none">
-                <div class="card text-white bg-dark shadow mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Kelola Produk</h5>
-                        <h2><i class="fa-solid fa-box"></i></h2>
+                    <div>
+                        <h4 class="fw-bold mb-1">{{ $toko->nama_toko }}</h4>
+                        <p class="text-muted mb-0" style="max-width: 500px;">
+                            {{ $toko->deskripsi }}
+                        </p>
                     </div>
                 </div>
-            </a>
+
+                {{-- Buka modal edit tanpa JS --}}
+                <button class="btn btn-warning"
+                        data-bs-toggle="modal"
+                        data-bs-target="#EditToko">
+                    Edit Toko
+                </button>
+
+            </div>
         </div>
 
-    </div>
+
+        {{-- Statistik --}}
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card text-white bg-primary shadow mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Jumlah Produk</h5>
+                        <h2>{{ $jumlahProduk }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white bg-success shadow mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Gambar Produk</h5>
+                        <h2>{{ $jumlahGambar }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="card text-white bg-dark shadow mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Kelola Produk</h5>
+                            <h2><i class="fa-solid fa-box"></i></h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
 
     @endif
 
@@ -109,7 +108,9 @@
 
 
 
-{{-- Modal Create Toko --}}
+{{-- ===========================================================
+    MODAL CREATE TOKO
+=========================================================== --}}
 <div class="modal fade" id="createTokoModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -130,7 +131,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">alamat Toko</label>
+                        <label class="form-label">Alamat Toko</label>
                         <input type="text" name="alamat" class="form-control" required>
                     </div>
 
@@ -162,7 +163,12 @@
     </div>
 </div>
 
-{{-- Modal Edit Toko --}}
+
+
+{{-- ===========================================================
+                        MODAL EDIT TOKO
+=========================================================== --}}
+@if ($toko)
 <div class="modal fade" id="EditToko" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -178,16 +184,24 @@
 
                 <div class="modal-body">
 
-                    <input type="hidden" name="id" id="edit_id">
+                    {{-- ID toko --}}
+                    <input type="hidden" name="id" value="{{ $toko->id }}">
 
                     <div class="mb-3">
                         <label>Nama Toko</label>
-                        <input type="text" name="nama_toko" id="edit_nama_toko" class="form-control" required>
+                        <input type="text"
+                               name="nama_toko"
+                               class="form-control"
+                               value="{{ $toko->nama_toko }}"
+                               required>
                     </div>
 
                     <div class="mb-3">
                         <label>Deskripsi Toko</label>
-                        <textarea name="deskripsi" id="edit_deskripsi" class="form-control" rows="3" required></textarea>
+                        <textarea name="deskripsi"
+                                  class="form-control"
+                                  rows="3"
+                                  required>{{ $toko->deskripsi }}</textarea>
                     </div>
 
                     <div class="mb-3">
@@ -207,13 +221,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).on("click", ".btnEditToko", function () {
-        $("#edit_id").val($(this).data("id"));
-        $("#edit_nama_toko").val($(this).data("nama"));
-        $("#edit_deskripsi").val($(this).data("deskripsi"));
-    });
-</script>
+@endif
 
 @endsection

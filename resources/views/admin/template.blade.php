@@ -34,6 +34,8 @@
             height: 100vh;
             width: 220px;
             position: fixed;
+            top: 0;
+            left: 0;
             background-color: #343a40;
             padding-top: 20px;
         }
@@ -66,14 +68,20 @@
         .main-content {
             margin-left: 220px;
             padding: 20px;
+            padding-top: 70px;
         }
 
         .navbar-top {
+            position: fixed;
+            top: 0;
+            left: 220px;
+            right: 0;
             background: #fff;
             padding: 10px 20px;
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
+            z-index: 1000;
         }
     </style>
 </head>
