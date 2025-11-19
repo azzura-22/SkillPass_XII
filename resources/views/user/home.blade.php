@@ -63,11 +63,7 @@
         @forelse ($produks as $p)
         <div class="col-md-3 mb-4">
             <div class="card shadow">
-
-                <img src="{{ asset('storage/image/'.$p->gambar_produk) }}"
-                     class="card-img-top "
-                     style="height: 180px; object-fit: cover;">
-
+                <img class="px-2 py-2" src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="rounded mb-1">
                 <div class="card-body">
                     <h6 class="fw-bold">{{ $p->nama_produk }}</h6>
 

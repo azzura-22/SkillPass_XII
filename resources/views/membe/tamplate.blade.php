@@ -87,8 +87,9 @@
         </div>
         <a href="{{route('member.dahboard')}}" class="nav-link {{request()->routeIs('admin.dashboard') ? 'active' : ''}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="{{route('member.prodak')}}"><i class="fa-solid fa-box"></i> Products</a>
-        <a href="{{route('admin.toko.index')}}" class="nav-link {{request()->routeIs('admin.toko.index') ? 'active' : ''}}"><i class="fa-solid fa-chart-line"></i> toko</a>
-        <a href="{{route('admin.kategori')}}" class="nav-link {{request()->routeIs('admin.kategori') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> kategori</a>
+        {{-- <a href="{{route('admin.toko.index')}}" class="nav-link {{request()->routeIs('admin.toko.index') ? 'active' : ''}}"><i class="fa-solid fa-chart-line"></i> toko</a>
+        <a href="{{route('admin.kategori')}}" class="nav-link {{request()->routeIs('admin.kategori') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> kategori</a> --}}
+        <a href="{{route('member.gambar')}}" class="nav-link {{request()->routeIs('member.gambar') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> gambar</a>
         <a href="{{route('logout')}}" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
 

@@ -19,6 +19,9 @@ class memberController extends Controller
     public function produk()
     {
         $toko_id = Auth::user()->Toko->id;
+        $data['gambars'] = Gambar::whereHas('produk', function ($query) use ($toko_id) {
+                                    $query->where('toko_id', $toko_id);
+                                })->get();
         $data['produks'] = Produk::with('Gambar')
                                 ->where('toko_id', $toko_id)
                                 ->get();

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gambar;
+use App\Models\Produk;
 use App\Models\Toko;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -99,6 +101,11 @@ class adminController extends Controller
     }
     public function deleteMember($id)
     {
+        Gambar::whereHas('produk', function ($query) use ($id) {
+            $query->where('toko_id', $id);
+        })->delete();
+        Produk::where('toko_id',$id)->delete();
+        Toko::where('user_id',$id)->delete();
         User::find($id)->delete();
 
         return back()->with('succsess','Member berhasil dihapus!');

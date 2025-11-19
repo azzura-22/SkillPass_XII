@@ -25,7 +25,9 @@
     @endif
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Data Produk</h5>
-        @if ($toko == null || $toko->status != 'active')
+        @if (!$toko || $toko->status == 'pending' || $toko->status == 'ditolak')
+        
+        @else
         {{-- Tombol membuka modal tambah --}}
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProdukModal">
             + Tambah Produk

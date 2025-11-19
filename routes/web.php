@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\GambarController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\memberController;
 use App\Http\Controllers\ProdukController;
@@ -29,6 +30,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/toko/store', [TokoController::class, 'store'])->name('admin.toko.store');
     Route::put('/admin/toko/update', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/delete/{id}', [TokoController::class, 'delete'])->name('admin.toko.delete');
+    Route::post('/admin/toko/approve/{id}', [TokoController::class, 'approve'])->name('member.approve.toko');
 });
 Route::middleware(['member'])->group(function(){
     Route::get('/member/dashboard',[memberController::class,'dashboard'])->name('member.dahboard');
@@ -38,5 +40,9 @@ Route::middleware(['member'])->group(function(){
     Route::get('/member/delete/{id}',[ProdukController::class,'destroy'])->name('produk.delete');
     Route::post('/member/toko/store',[memberController::class,'store'])->name('member.toko.store');
     Route::put('/member/toko/update/',[memberController::class,'update'])->name('member.toko.update');
+    Route::get('/member/gambar/',[GambarController::class,'index'])->name('member.gambar');
+    Route::post('/member/gambar/store',[GambarController::class,'store'])->name('member.gambar.store');
+    Route::get('/member/gambar/delete/{id}',[GambarController::class,'delete'])->name('member.gambar.delete');
+    Route::put('/member/gambar/update/{id}',[GambarController::class,'update'])->name('member.gambar.update');
     Route::get('/logout/user',[adminController::class,'logout'])->name('logout.user');
 });

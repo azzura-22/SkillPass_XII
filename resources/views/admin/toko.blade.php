@@ -41,6 +41,7 @@
                     <th>Owner</th>
                     <th>Kontak</th>
                     <th>Alamat</th>
+                    <th>status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -53,6 +54,7 @@
                     <td>{{ $t->user->name }}</td>
                     <td>{{ $t->kontak_toko }}</td>
                     <td>{{ $t->alamat }}</td>
+                    <td>{{$t->status}}</td>
                     <td>
 
                         {{-- EDIT BUTTON --}}
@@ -75,7 +77,10 @@
                            onclick="return confirm('Yakin ingin menghapus toko ini?')">
                            Hapus
                         </a>
-
+                        <form action="{{ route('member.approve.toko', $t->id) }}" method="POST">
+                            @csrf
+                                <button class="btn btn-info">Approve</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

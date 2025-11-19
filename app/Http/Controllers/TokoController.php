@@ -97,4 +97,12 @@ class TokoController extends Controller
 
         return back()->with('success', 'Toko berhasil dihapus!');
     }
+    public function approve($id)
+    {
+        $toko = Toko::findOrFail($id);
+        $toko->status = 'active';
+        $toko->save();
+
+        return redirect()->back()->with('success', 'Toko berhasil diapprove!');
+    }
 }
