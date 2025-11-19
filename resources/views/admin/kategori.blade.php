@@ -87,7 +87,7 @@
 {{-- ------------------ MODAL EDIT (AKTIF JIKA $kategoriEdit ADA) ------------------ --}}
 @if(isset($kategoriEdit))
 <script>
-    // Auto buka modal EDIT tanpa JS? Bootstrap butuh JS minimal
+
 </script>
 
 <div class="modal fade show" id="editKategoriModal" tabindex="-1" style="display:block; background:rgba(0,0,0,0.4)">
