@@ -32,6 +32,7 @@
 
         /* Optional: shadow bawah navbar */
         .navbar {
+            background-color: rgb(105, 225, 225);
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
     </style>
@@ -39,7 +40,7 @@
 <body>
 
 {{-- NAVBAR USER --}}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="#">
@@ -84,7 +85,7 @@
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{route('member.dahboard')}}">Toko anda</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item text-danger" href="{{ route('logout') }}"
@@ -108,6 +109,54 @@
 <div class="container py-4">
     @yield('content')
 </div>
+<footer class="mt-5 pt-5 pb-4 footer-fstore text-white">
+    <div class="container">
+        <div class="row gy-4">
+
+            <!-- Brand -->
+            <div class="col-md-4">
+                <h3 class="fw-bold mb-3">Fstore</h3>
+                <p style="max-width: 300px;">
+                    Fstore adalah marketplace sederhana untuk memenuhi kebutuhan belanja Anda secara cepat dan mudah.
+                </p>
+
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Menu -->
+            <div class="col-md-4">
+                <h5 class="fw-bold mb-3">Menu</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="footer-link">Beranda</a></li>
+                    <li><a href="#" class="footer-link">Kategori</a></li>
+                    <li><a href="#" class="footer-link">Produk</a></li>
+                    <li><a href="#" class="footer-link">Tentang Kami</a></li>
+                </ul>
+            </div>
+
+            <!-- Kontak -->
+            <div class="col-md-4">
+                <h5 class="fw-bold mb-3">Kontak</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone me-2"></i> +62 82315818637</li>
+                    <li><i class="fas fa-envelope me-2"></i> Fstore@gmail.com</li>
+                    <li><i class="fas fa-location-dot me-2"></i> Tasikmalaya, Indonesia</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <div class="text-center">
+            <p class="mb-0">© 2025 Fstore. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

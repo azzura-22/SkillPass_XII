@@ -43,6 +43,7 @@ class TokoController extends Controller
             'deskripsi'    => $request->deskripsi,
             'gambar'       => $namaFile,
             'user_id'      => $request->user_id,
+            'status'       => 'active',
             'kontak_toko'  => $request->kontak_toko,
             'alamat'       => $request->alamat,
         ]);

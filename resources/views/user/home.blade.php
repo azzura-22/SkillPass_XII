@@ -2,21 +2,97 @@
 @section('content')
 
 <style>
+    /* BACKGROUND HALAMAN */
+    body {
+        background: linear-gradient(to bottom, #4d4c4c, #000000);
+        min-height: 100vh;
+        color: #ffffff; /* warna default teks putih */
+    }
+
+    /* Override untuk teks di dalam hero */
+    .hero, .hero h2, .hero p, .hero a {
+        color: #ffffff;
+    }
+
+    /* Override teks toko */
+    .toko-circle + h5 {
+        color: #ffffff;
+    }
+
+    /* Override teks produk */
+    .card h6,
+    .card p,
+    .card a {
+        color: #ffffff !important;
+    }
+
+    /* Hero */
     .hero {
         background: url('/assets/banner.jpg') center/cover no-repeat;
-        padding: 80px 20px;
+        padding: 100px 20px;
         border-radius: 15px;
         color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .hero-overlay {
-        background: rgba(0,0,0,0.55);
-        padding: 60px;
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
         border-radius: 15px;
     }
+    .hero-overlay {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+
+    /* TOKO CARD */
     .toko-card img {
         height: 180px;
         object-fit: cover;
         border-radius: 10px;
+        transition: transform 0.3s;
+    }
+    .toko-card img:hover {
+        transform: scale(1.05);
+    }
+
+    /* TOKO CIRCLE */
+    .toko-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #ddd;
+        transition: transform 0.3s, border-color 0.3s;
+    }
+    .toko-circle:hover {
+        transform: scale(1.05);
+        border-color: #007bff;
+    }
+
+    /* PRODUK CARD */
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        background-color: rgba(255,255,255,0.05); /* semi-transparent card agar tetap terlihat */
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    .card img {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    /* Heading */
+    h4, h5, h6, p, a {
+        color: #ffffff;
     }
 </style>
 
@@ -24,60 +100,44 @@
 
     {{-- HERO --}}
     <div class="hero mb-5">
-        <div class="hero-overlay text-center">
+        <div class="hero-overlay">
             <h2 class="fw-bold">Selamat Datang di Aplikasi Kami</h2>
             <p>Nikmati layanan terbaik dan temukan toko pilihan Anda.</p>
-            <a href="#tokoList" class="btn btn-light mt-3">Lihat Toko</a>
         </div>
     </div>
 
     {{-- LIST TOKO --}}
+    <h4 id="tokoList" class="mb-4 fw-bold">Toko Pilihan</h4>
     <div class="row">
     @forelse ($tokos as $t)
     <div class="col-md-3 mb-4 text-center">
-
-        {{-- FOTO LINGKARAN + LINK KE DETAIL --}}
         <a href="#">
             <img
                 src="{{ asset('storage/image/'.$t->gambar) }}"
-                class="rounded-circle mb-3"
-                style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #ddd;">
+                class="toko-circle mb-3">
         </a>
-
-        {{-- NAMA TOKO --}}
         <h5 class="fw-bold">{{ $t->nama_toko }}</h5>
-
     </div>
     @empty
     <div class="col-12 text-center">
         <p class="text-muted">Belum ada toko tersedia.</p>
     </div>
     @endforelse
-</div>
-
+    </div>
 
     {{-- PRODUK TERBARU --}}
     <h4 class="mt-5 mb-3 fw-bold">Produk Terbaru</h4>
-
     <div class="row">
         @forelse ($produks as $p)
         <div class="col-md-3 mb-4">
-            <div class="card shadow">
-                <img class="px-2 py-2" src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="rounded mb-1">
+            <div class="card shadow-sm">
+                <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="card-img-top">
                 <div class="card-body">
                     <h6 class="fw-bold">{{ $p->nama_produk }}</h6>
-
-                    <p class="text-muted small mb-1">
-                        Toko: {{ $p->toko->nama_toko }}
-                    </p>
-
-                    <p class="text-primary fw-bold">
-                        Rp {{ number_format($p->harga_produk, 0, ',', '.') }}
-                    </p>
-
+                    <p class="text-muted small mb-1">Toko: {{ $p->toko->nama_toko }}</p>
+                    <p class="text-primary fw-bold">Rp {{ number_format($p->harga_produk, 0, ',', '.') }}</p>
                     <a href="#" class="btn btn-outline-primary w-100">Detail Produk</a>
                 </div>
-
             </div>
         </div>
         @empty
@@ -88,5 +148,6 @@
     </div>
 
 </div>
+
 
 @endsection

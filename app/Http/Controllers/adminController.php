@@ -41,7 +41,7 @@ class adminController extends Controller
         }
 
         if ($role === 'member') {
-            return redirect()->route('member.dahboard');
+            return redirect()->route('user.dashboard');
         }
         return redirect()->route('login')->with('error', 'Role tidak dikenal.');
     }
@@ -117,5 +117,32 @@ class adminController extends Controller
         $kategori = Kategori::all();
 
         return view('admin.kategori', compact('kategori', 'kategoriEdit'));
+    }
+    public function produk(){
+        $data['produks'] = Produk::with('Kategori','Toko')->get();
+        $data['kategori'] = Kategori::all();
+        return view('admin.produk',$data);
+    }
+
+    public function produkdelete($id){
+        $produk = Produk::findOrFail($id);
+
+        if ($produk->Gambar && $produk->Gambar->count() > 0) {
+
+            foreach ($produk->Gambar as $gambar) {
+
+                $path = public_path('storage/imageproduk/' . $gambar->path_gambar);
+
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+
+                $gambar->delete();
+            }
+        }
+
+        $produk->delete();
+
+        return redirect()->back()->with('success', 'Produk berhasil dihapus!');
     }
 }
