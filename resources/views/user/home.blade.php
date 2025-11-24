@@ -10,7 +10,7 @@
     }
 
     /* Override untuk teks di dalam hero */
-    .hero, .hero h2, .hero p, .hero a {
+    .benner, .benner h2, .benner p, .benner a {
         color: #ffffff;
     }
 
@@ -27,7 +27,7 @@
     }
 
     /* Hero */
-    .hero {
+    .benner {
         background: url('/assets/banner.jpg') center/cover no-repeat;
         padding: 100px 20px;
         border-radius: 15px;
@@ -36,14 +36,14 @@
         overflow: hidden;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .hero::before {
+    .benner::before {
         content: '';
         position: absolute;
         inset: 0;
         background: rgba(0,0,0,0.5);
         border-radius: 15px;
     }
-    .hero-overlay {
+    .benner-overlay {
         position: relative;
         z-index: 1;
         text-align: center;
@@ -98,9 +98,9 @@
 
 <div class="container mt-4">
 
-    {{-- HERO --}}
-    <div class="hero mb-5">
-        <div class="hero-overlay">
+    {{-- benner --}}
+    <div class="benner mb-5">
+        <div class="benner-overlay">
             <h2 class="fw-bold">Selamat Datang di Aplikasi Kami</h2>
             <p>Nikmati layanan terbaik dan temukan toko pilihan Anda.</p>
         </div>
@@ -111,7 +111,7 @@
     <div class="row">
     @forelse ($tokos as $t)
     <div class="col-md-3 mb-4 text-center">
-        <a href="#">
+        <a href="{{route('member.toko.detail',$t->id)}}">
             <img
                 src="{{ asset('storage/image/'.$t->gambar) }}"
                 class="toko-circle mb-3">
@@ -136,7 +136,7 @@
                     <h6 class="fw-bold">{{ $p->nama_produk }}</h6>
                     <p class="text-muted small mb-1">Toko: {{ $p->toko->nama_toko }}</p>
                     <p class="text-primary fw-bold">Rp {{ number_format($p->harga_produk, 0, ',', '.') }}</p>
-                    <a href="#" class="btn btn-outline-primary w-100">Detail Produk</a>
+                    <a href="{{route('produk.detail',$p->id)}}" class="btn btn-outline-primary w-100">Detail Produk</a>
                 </div>
             </div>
         </div>

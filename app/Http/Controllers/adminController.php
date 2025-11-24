@@ -118,6 +118,7 @@ class adminController extends Controller
 
         return view('admin.kategori', compact('kategori', 'kategoriEdit'));
     }
+    
     public function produk(){
         $data['produks'] = Produk::with('Kategori','Toko')->get();
         $data['kategori'] = Kategori::all();

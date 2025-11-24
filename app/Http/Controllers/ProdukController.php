@@ -98,4 +98,16 @@ public function destroy($id)
     return back()->with('success', 'Produk dan semua gambar berhasil dihapus.');
 }
 
+public function show($id)
+{
+    $produk = Produk::with('Gambar', 'Kategori', 'Toko')->findOrFail($id);
+
+    $toko = Produk::where('toko_id', $produk->toko_id)->first()->Toko;
+
+    $allProdukToko = Produk::where('toko_id', $toko->id)
+        ->where('id', '!=', $produk->id)
+        ->get();
+
+    return view('user.detainProduk', compact('produk', 'toko', 'allProdukToko'));
+}
 }

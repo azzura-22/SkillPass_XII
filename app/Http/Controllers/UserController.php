@@ -17,5 +17,12 @@ class UserController extends Controller
                               ->get();
 
     return view('user.home', $data);
-}
+    }
+
+    public function toko($id){
+        $toko = Toko::findOrFail($id);
+        $produks = Produk::with('Gambar')->where('toko_id', $toko->id)->get();
+
+        return view('user.tokodetail', compact('toko', 'produks'));
+    }
 }

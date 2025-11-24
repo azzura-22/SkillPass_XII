@@ -44,7 +44,7 @@
     <div class="container-fluid">
 
         <a class="navbar-brand" href="#">
-            MyApp
+            AZZStore
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -88,8 +88,7 @@
                             <li><a class="dropdown-item" href="{{route('member.dahboard')}}">Toko anda</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item text-danger" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item text-danger" href="{{ route('logout.user') }}">
                                    Logout
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -117,7 +116,7 @@
             <div class="col-md-4">
                 <h3 class="fw-bold mb-3">Fstore</h3>
                 <p style="max-width: 300px;">
-                    Fstore adalah marketplace sederhana untuk memenuhi kebutuhan belanja Anda secara cepat dan mudah.
+                    AZZStore adalah marketplace sederhana untuk memenuhi kebutuhan belanja Anda secara cepat dan mudah.
                 </p>
 
                 <div class="d-flex gap-3 mt-3">
@@ -153,7 +152,7 @@
         <hr class="my-4">
 
         <div class="text-center">
-            <p class="mb-0">© 2025 Fstore. All rights reserved.</p>
+            <p class="mb-0">© 2025 AZZStore. All rights reserved.</p>
         </div>
     </div>
 </footer>

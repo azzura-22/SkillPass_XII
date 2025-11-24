@@ -15,6 +15,7 @@ Route::get('/login',[adminController::class,'loginView'])->name('login');
 Route::post('/login/post',[adminController::class,'login'])->name('login.post');
 Route::get('/regis',[adminController::class,'regisview'])->name('regis');
 Route::post('/register/post',[adminController::class,'register'])->name('register.post');
+
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [adminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/useradmin', [adminController::class, 'userA'])->name('admin.useradmin');
@@ -49,3 +50,5 @@ Route::middleware(['member'])->group(function(){
     Route::put('/member/gambar/update/{id}',[GambarController::class,'update'])->name('member.gambar.update');
     Route::get('/logout/user',[adminController::class,'logout'])->name('logout.user');
 });
+Route::get('/member/toko/detail/{id}',[UserController::class,'toko'])->name('member.toko.detail');
+Route::get('/produk/detail/{id}',[ProdukController::class,'show'])->name('produk.detail');
