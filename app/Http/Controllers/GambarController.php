@@ -84,4 +84,65 @@ class GambarController extends Controller
 
         return back()->with('success','Gambar berhasil dihapus!');
     }
+
+    //admin
+
+    public function gambar(){
+        $data['gambars'] = Gambar::all();
+        return view('admin.gambar',$data);
+    }
+
+     public function gambarUbah(Request $request, $id)
+    {
+        $gambar = Gambar::findOrFail($id);
+
+        $request->validate([
+            'path_gambar' => 'required|image|mimes:jpg,png,jpeg|max:2048'
+        ]);
+
+        if (file_exists(public_path('storage/imageproduk/'.$gambar->path_gambar))) {
+            unlink(public_path('storage/imageproduk/'.$gambar->path_gambar));
+        }
+
+        $file = $request->file('path_gambar');
+        $fileName = time().'_'.$file->getClientOriginalName();
+        $file->move(public_path('storage/imageproduk'), $fileName);
+
+        $gambar->update([
+            'path_gambar' => $fileName
+        ]);
+
+        return back()->with('success','Gambar berhasil diperbarui!');
+    }
+
+    public function gambarHapus($id)
+    {
+        $gambar = Gambar::findOrFail($id);
+
+        if (file_exists(public_path('storage/imageproduk/'.$gambar->path_gambar))) {
+            unlink(public_path('storage/imageproduk/'.$gambar->path_gambar));
+        }
+
+        $gambar->delete();
+
+        return back()->with('success','Gambar berhasil dihapus!');
+    }
+    public function gambartambah(Request $request)
+    {
+        $request->validate([
+            'produk_id' => 'required',
+            'path_gambar' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $file = $request->file('path_gambar');
+        $fileName = time().'_'.$file->getClientOriginalName();
+        $file->move(public_path('storage/imageproduk'), $fileName);
+
+        Gambar::create([
+            'produk_id' => $request->produk_id,
+            'path_gambar' => $fileName
+        ]);
+
+        return back()->with('success','Gambar berhasil ditambahkan');
+    }
 }

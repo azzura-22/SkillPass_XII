@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title') | User Dashboard</title>
+    <title>@yield('title', 'Dashboard') | AZZStore</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Font Awesome (opsional untuk icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
     <style>
         /* Navbar fixed */
         body {
             padding-top: 70px; /* tinggi navbar */
+            background: linear-gradient(to bottom, #2c2c2c, #000000);
+            color: #ffffff;
+            min-height: 100vh;
         }
 
         .navbar-brand {
@@ -30,26 +36,73 @@
             border-radius: 5px;
         }
 
-        /* Optional: shadow bawah navbar */
         .navbar {
             background-color: rgb(105, 225, 225);
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
+
+        /* Search form */
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #0d6efd;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1c1c1c;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toko circle */
+        .toko-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ddd;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .toko-circle:hover {
+            transform: scale(1.05);
+            border-color: #0d6efd;
+        }
+
+        /* Produk card */
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .card img {
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
+
+    @stack('styles')
 </head>
 <body>
 
 {{-- NAVBAR USER --}}
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
-
-        <a class="navbar-brand" href="#">
-            AZZStore
-        </a>
+        <a class="navbar-brand" href="{{ route('user.dashboard') }}">AZZStore</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarUser" aria-controls="navbarUser"
-            aria-expanded="false" aria-label="Toggle navigation">
+                data-bs-target="#navbarUser" aria-controls="navbarUser"
+                aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -57,21 +110,29 @@
 
             {{-- MENU KIRI --}}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}"
-                       href="#">Home</a>
+                       href="{{ route('user.dashboard') }}">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('produk*') ? 'active' : '' }}" href="#">Produk</a>
+                    <a class="nav-link {{ request()->routeIs('user.produk') ? 'active' : '' }}"
+                       href="{{ route('user.produk') }}">Produk</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('toko*') ? 'active' : '' }}" href="#">Toko</a>
+                    <a class="nav-link {{ request()->routeIs('toko.user') ? 'active' : '' }}"
+                       href="{{ route('toko.user') }}">Toko</a>
                 </li>
-
             </ul>
+
+            {{-- SEARCH FORM --}}
+            <form class="d-flex me-3" role="search" action="{{ route('user.search') }}" method="GET">
+                <input class="form-control me-2" type="search" name="q"
+                       placeholder="Cari produk atau toko" aria-label="Search"
+                       value="{{ request('q') }}">
+                <button class="btn btn-outline-light" type="submit">Cari</button>
+            </form>
 
             {{-- MENU KANAN --}}
             <ul class="navbar-nav ms-auto">
@@ -81,11 +142,10 @@
                     </li>
                 @else
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
-                        </a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{route('member.dahboard')}}">Toko anda</a></li>
+                            <li><a class="dropdown-item" href="{{ route('member.dahboard') }}">Toko Anda</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item text-danger" href="{{ route('logout.user') }}">
@@ -108,36 +168,31 @@
 <div class="container py-4">
     @yield('content')
 </div>
-<footer class="mt-5 pt-5 pb-4 footer-fstore text-white">
+
+{{-- FOOTER --}}
+<footer class="mt-5 pt-5 pb-4 text-white">
     <div class="container">
         <div class="row gy-4">
-
-            <!-- Brand -->
             <div class="col-md-4">
-                <h3 class="fw-bold mb-3">Fstore</h3>
-                <p style="max-width: 300px;">
-                    AZZStore adalah marketplace sederhana untuk memenuhi kebutuhan belanja Anda secara cepat dan mudah.
-                </p>
-
+                <h3 class="fw-bold mb-3">AZZStore</h3>
+                <p style="max-width: 300px;">AZZStore adalah marketplace sederhana untuk memenuhi kebutuhan belanja Anda secara cepat dan mudah.</p>
                 <div class="d-flex gap-3 mt-3">
-                    <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
 
-            <!-- Menu -->
             <div class="col-md-4">
                 <h5 class="fw-bold mb-3">Menu</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="footer-link">Beranda</a></li>
-                    <li><a href="#" class="footer-link">Kategori</a></li>
-                    <li><a href="#" class="footer-link">Produk</a></li>
-                    <li><a href="#" class="footer-link">Tentang Kami</a></li>
+                    <li><a href="{{ route('user.dashboard') }}">Beranda</a></li>
+                    <li><a href="{{ route('user.produk') }}">Produk</a></li>
+                    <li><a href="{{ route('toko.user') }}">Toko</a></li>
+                    <li><a href="#">Tentang Kami</a></li>
                 </ul>
             </div>
 
-            <!-- Kontak -->
             <div class="col-md-4">
                 <h5 class="fw-bold mb-3">Kontak</h5>
                 <ul class="list-unstyled">
@@ -146,11 +201,9 @@
                     <li><i class="fas fa-location-dot me-2"></i> Tasikmalaya, Indonesia</li>
                 </ul>
             </div>
-
         </div>
 
         <hr class="my-4">
-
         <div class="text-center">
             <p class="mb-0">© 2025 AZZStore. All rights reserved.</p>
         </div>
@@ -160,5 +213,6 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+@stack('scripts')
 </body>
 </html>

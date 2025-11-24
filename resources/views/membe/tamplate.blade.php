@@ -94,12 +94,18 @@
             <i class="fa-solid fa-user-shield"></i> Member Panel
         </div>
         <a href="{{route('member.dahboard')}}" class="nav-link {{request()->routeIs('member.dahboard') ? 'active' : ''}}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        @php
+            $toko = Auth::user()->Toko;
+        @endphp
+        @if (!$toko)
+        @else
         <a href="{{route('member.prodak')}}" class="nav-link {{request()->routeIs('member.prodak') ? 'active' : ''}}"><i class="fa-solid fa-box"></i> Products</a>
+        @endif
         {{-- <a href="{{route('admin.toko.index')}}" class="nav-link {{request()->routeIs('admin.toko.index') ? 'active' : ''}}"><i class="fa-solid fa-chart-line"></i> toko</a> --}}
-        <a href="{{route('admin.kategori')}}" class="nav-link {{request()->routeIs('admin.kategori') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> kategori</a>
+        <a href="{{route('member.kategori')}}" class="nav-link {{request()->routeIs('member.kategori') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> kategori</a>
         <a href="{{route('user.dashboard')}}" class="nav-link {{request()->routeIs('user.dashboard') ? 'active' : ''}}">Publik Home</a>
         <a href="{{route('member.gambar')}}" class="nav-link {{request()->routeIs('member.gambar') ? 'active' : ''}}"><i class="fa-solid fa-gear"></i> gambar</a>
-        <a href="{{route('logout')}}" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        <a href="{{route('logout.user')}}" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
 
     <!-- Tempat Konten Utama -->

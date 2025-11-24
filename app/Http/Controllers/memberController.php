@@ -19,12 +19,10 @@ class memberController extends Controller
     public function produk()
     {
         $toko_id = Auth::user()->Toko->id;
-        $data['gambars'] = Gambar::whereHas('produk', function ($query) use ($toko_id) {
-                                    $query->where('toko_id', $toko_id);
-                                })->get();
-        $data['produks'] = Produk::with('Gambar')
-                                ->where('toko_id', $toko_id)
-                                ->get();
+        $data['produks'] = Produk::with(['toko', 'kategori', 'Gambar'])
+                         ->where('toko_id', $toko_id)
+                         ->latest()
+                         ->get();
         $data['kategori'] = Kategori::all();
         return view('membe.produk', $data);
     }
@@ -72,13 +70,13 @@ class memberController extends Controller
         $fileName = $toko->gambar;
 
         if ($request->hasFile('logo_toko')) {
-            if ($toko->gambar && file_exists(public_path('storage/image/'.$toko->gambar))) {
-                unlink(public_path('storage/image/'.$toko->gambar));
+            if ($toko->gambar && file_exists(public_path('storage/logotoko/'.$toko->gambar))) {
+                unlink(public_path('storage/logotoko/'.$toko->gambar));
             }
 
             $file = $request->file('logo_toko');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/image'), $fileName);
+            $file->move(public_path('storage/logotoko'), $fileName);
         }
 
         $toko->update([
@@ -88,5 +86,67 @@ class memberController extends Controller
         ]);
 
         return back()->with('success','Toko berhasil diperbarui!');
+    }
+    public function kategori (){
+        $data['kategori'] = Kategori::all();
+        return view('membe.kategori',$data);
+    }
+    public function addkategori (Request $request){
+        $request -> validate([
+            'nama_kategori' => 'required'
+        ]);
+        Kategori::create([
+            'nama_katgori' => $request -> nama_kategori
+        ]);
+        return redirect() -> back() -> with ('success', 'Kategori Berhasil Ditambahkan');
+    }
+    public function UpdateKategori (Request $request){
+        Kategori::where('id',$request -> id)->Update([
+            'nama_katgori' => $request -> nama_katgori
+        ]);
+        return redirect() -> back() -> with ('success', 'Kategori Berhasil Diupdate');
+    }
+    public function edit($id)
+    {
+        $kategoriEdit = Kategori::findOrFail($id);
+        $kategori = Kategori::all();
+
+        return view('membe.kategori', compact('kategori', 'kategoriEdit'));
+    }
+
+    public function addGambar ( Request $request ,$id){
+        $produk = Produk::find($id);
+
+        $request->validate([
+            'gambar_produk.*'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        foreach ($request->file('gambar_produk') as $file) {
+
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('storage/imageproduk'), $namaFile);
+
+            Gambar::create([
+                'produk_id'   => $produk->id,
+                'path_gambar' => $namaFile,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan!');
+    }
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+
+        // Cari produk berdasarkan nama
+        $produks = Produk::with('toko', 'Gambar')
+            ->where('nama_produk', 'like', "%$q%")
+            ->get();
+
+        // Cari toko berdasarkan nama
+        $tokos = Toko::where('nama_toko', 'like', "%$q%")
+            ->get();
+
+        return view('user.search', compact('produks', 'tokos', 'q'));
     }
 }

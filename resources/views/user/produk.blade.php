@@ -101,28 +101,9 @@
     {{-- benner --}}
     <div class="benner mb-5">
         <div class="benner-overlay">
-            <h2 class="fw-bold">Selamat Datang di Aplikasi Kami</h2>
-            <p>Nikmati layanan terbaik dan temukan toko pilihan Anda.</p>
+            <h2 class="fw-bold">Halaman Produk lengkap</h2>
+            <p>Temukan produk yang anda cari</p>
         </div>
-    </div>
-
-    {{-- LIST TOKO --}}
-    <h4 id="tokoList" class="mb-4 fw-bold">Toko Pilihan</h4>
-    <div class="row">
-    @forelse ($tokos as $t)
-    <div class="col-md-3 mb-4 text-center">
-        <a href="{{route('member.toko.detail',$t->id)}}">
-            <img
-                src="{{ asset('storage/logotoko/'.$t->gambar) }}"
-                class="toko-circle mb-3">
-        </a>
-        <h5 class="fw-bold">{{ $t->nama_toko }}</h5>
-    </div>
-    @empty
-    <div class="col-12 text-center">
-        <p class="text-muted">Belum ada toko tersedia.</p>
-    </div>
-    @endforelse
     </div>
 
     {{-- PRODUK TERBARU --}}

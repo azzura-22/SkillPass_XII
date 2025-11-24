@@ -25,4 +25,11 @@ class UserController extends Controller
 
         return view('user.tokodetail', compact('toko', 'produks'));
     }
+    public function produk(){
+        $data['produks'] = Produk::with(['toko', 'kategori', 'Gambar'])
+                                  ->latest()
+                                  ->get();
+
+        return view('user.produk', $data);
+    }
 }

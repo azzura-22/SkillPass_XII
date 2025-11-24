@@ -59,7 +59,10 @@
                             @csrf
                             <button class="btn btn-info">Approve</button>
                         </form>
-
+                        <form action="{{route('member.tolak.toko',$t->id)}}" method="POST" class="">
+                            @csrf
+                            <button class="btn btn-secondary">Tolak</button>
+                        </form>
                     </td>
                 </tr>
 

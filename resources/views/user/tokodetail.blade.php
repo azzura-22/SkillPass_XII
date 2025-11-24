@@ -9,8 +9,8 @@
     }
 
     /* HERO TOKO */
-    .toko-hero {
-        background: url('{{ asset("storage/image/".$toko->gambar) }}') center/cover no-repeat;
+    .toko-bener {
+        background: url('{{ asset("storage/logotoko/".$toko->gambar) }}') center/cover no-repeat;
         height: 300px;
         border-radius: 15px;
         position: relative;
@@ -18,14 +18,14 @@
         margin-bottom: 30px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    .toko-hero::before {
+    .toko-bener::before {
         content: '';
         position: absolute;
         inset: 0;
         background: rgba(0,0,0,0.5);
         border-radius: 15px;
     }
-    .toko-hero-overlay {
+    .toko-bener-overlay {
         position: relative;
         z-index: 1;
         display: flex;
@@ -36,11 +36,11 @@
         text-align: center;
         color: #fff;
     }
-    .toko-hero h2 {
+    .toko-bener h2 {
         font-size: 2.5rem;
         font-weight: bold;
     }
-    .toko-hero p {
+    .toko-bener p {
         font-size: 1.1rem;
     }
 
@@ -79,9 +79,8 @@
 
 <div class="container mt-4">
 
-    {{-- HERO TOKO --}}
-    <div class="toko-hero mb-4">
-        <div class="toko-hero-overlay">
+    <div class="toko-bener mb-4">
+        <div class="toko-bener-overlay">
             <h2>{{ $toko->nama_toko }}</h2>
             <p>{{ $toko->deskripsi ?? 'Belum ada deskripsi untuk toko ini.' }}</p>
         </div>
@@ -105,7 +104,7 @@
                 <div class="card-body">
                     <h6 class="fw-bold">{{ $produk->nama_produk }}</h6>
                     <p class="text-primary fw-bold">Rp {{ number_format($produk->harga_produk, 0, ',', '.') }}</p>
-                    <a href="#" class="btn btn-outline-primary w-100">Detail Produk</a>
+                    <a href="{{route('produk.detail',$produk->id)}}" class="btn btn-outline-primary w-100">Detail Produk</a>
                 </div>
             </div>
         </div>

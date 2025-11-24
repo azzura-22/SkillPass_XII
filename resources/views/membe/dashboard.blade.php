@@ -33,6 +33,15 @@
             <strong>Info:</strong> Toko Anda sedang dalam proses verifikasi.
         </div>
 
+    @elseif ($toko && $toko->status == 'ditolak' )
+        <div class="alert alert-danger mt-3" role="alert">
+        <strong>Peringatan:</strong> Toko Anda ditolak.
+        Jika Anda ingin pengajuan ulang, hubungi admin. <hr>
+        <a href="https://wa.me/6289526025545?text={{ urlencode('Admin tolong acc toko saya, jangan ditolak lagi.') }}"
+           class="btn btn-success btn-buy mt-3" target="_blank">
+           Hubungi Admin
+        </a>
+    </div>
     @else
 
         {{-- Profil Toko --}}
@@ -42,7 +51,7 @@
                 <div class="d-flex">
                     <div class="me-3">
                         @if ($toko->gambar)
-                            <img src="{{ asset('storage/image/'.$toko->gambar) }}"
+                            <img src="{{ asset('storage/logotoko/'.$toko->gambar) }}"
                                  width="100" height="100" class="rounded-circle shadow">
                         @else
                             <img src="https://via.placeholder.com/100" class="rounded-circle shadow">
@@ -90,7 +99,7 @@
             </div>
 
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
+                <a href="{{route('member.prodak')}}" class="text-decoration-none">
                     <div class="card text-white bg-dark shadow mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Kelola Produk</h5>

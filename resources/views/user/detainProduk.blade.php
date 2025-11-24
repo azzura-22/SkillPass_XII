@@ -19,6 +19,28 @@
         border-radius: 15px;
     }
 
+    .thumbnail-images {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .thumbnail-images img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid #ddd;
+        transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .thumbnail-images img:hover {
+        transform: scale(1.05);
+        border-color: #0d6efd;
+    }
+
     .product-info h2 {
         font-weight: bold;
         margin-bottom: 20px;
@@ -45,7 +67,15 @@
         {{-- Gambar Produk --}}
         <div class="col-md-6 product-images mb-3">
             @if($produk->Gambar->count() > 0)
-                <img src="{{ asset('storage/imageproduk/'.$produk->Gambar->first()->path_gambar) }}" alt="{{ $produk->nama_produk }}">
+                {{-- Gambar utama --}}
+                <img id="mainImage" src="{{ asset('storage/imageproduk/'.$produk->Gambar->first()->path_gambar) }}" alt="{{ $produk->nama_produk }}">
+
+                {{-- Thumbnails --}}
+                <div class="thumbnail-images mt-2">
+                    @foreach($produk->Gambar as $g)
+                        <img src="{{ asset('storage/imageproduk/'.$g->path_gambar) }}" onclick="document.getElementById('mainImage').src=this.src;">
+                    @endforeach
+                </div>
             @else
                 <img src="{{ asset('assets/no-image.png') }}" alt="No Image">
             @endif
@@ -57,7 +87,10 @@
             <p class="price">Rp {{ number_format($produk->harga_produk, 0, ',', '.') }}</p>
             <p>Toko: <strong>{{ $produk->toko->nama_toko }}</strong></p>
             <p>{{ $produk->deskripsi ?? 'Belum ada deskripsi untuk produk ini.' }}</p>
-            <a href="#" class="btn btn-primary btn-buy mt-3">Beli Sekarang</a>
+            <a href="https://wa.me/{{ $produk->toko->kontak_toko }}?text={{ urlencode('Halo, saya ingin membeli produk '.$produk->nama_produk) }}"
+                class="btn btn-success btn-buy mt-3" target="_blank">
+                Beli Sekarang
+            </a>
         </div>
     </div>
 
@@ -67,7 +100,11 @@
         @forelse ($allProdukToko as $p)
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm" style="background-color: rgba(255,255,255,0.05); color: #fff;">
-                    <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="card-img-top" style="height:200px; object-fit:cover;">
+                    @if($p->Gambar->count() > 0)
+                        <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="card-img-top" style="height:200px; object-fit:cover;">
+                    @else
+                        <img src="{{ asset('assets/no-image.png') }}" class="card-img-top" style="height:200px; object-fit:cover;">
+                    @endif
                     <div class="card-body">
                         <h6 class="fw-bold">{{ $p->nama_produk }}</h6>
                         <p class="text-primary fw-bold">Rp {{ number_format($p->harga_produk, 0, ',', '.') }}</p>

@@ -106,4 +106,16 @@ class TokoController extends Controller
 
         return redirect()->back()->with('success', 'Toko berhasil diapprove!');
     }
+    public function reject ($id){
+        $toko = Toko::find($id);
+        $toko->status = 'ditolak';
+
+        $toko->save();
+        return redirect()->back()->with('success', 'Telah di tolak!');
+    }
+
+    public function toko(){
+        $data['tokos'] = Toko::all();
+        return view('user.toko',$data);
+    }
 }
