@@ -94,11 +94,21 @@
     h4, h5, h6, p, a {
         color: #ffffff;
     }
+
+    /* Filter Dropdown */
+    .filter-form select {
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #555;
+    }
+    .filter-form select option {
+        background-color: #333;
+        color: #fff;
+    }
 </style>
 
 <div class="container mt-4">
 
-    {{-- benner --}}
     <div class="benner mb-5">
         <div class="benner-overlay">
             <h2 class="fw-bold">Selamat Datang di Aplikasi Kami</h2>
@@ -109,34 +119,51 @@
     {{-- LIST TOKO --}}
     <h4 id="tokoList" class="mb-4 fw-bold">Toko Pilihan</h4>
     <div class="row">
-    @forelse ($tokos as $t)
-    <div class="col-md-3 mb-4 text-center">
-        <a href="{{route('member.toko.detail',$t->id)}}">
-            <img
-                src="{{ asset('storage/logotoko/'.$t->gambar) }}"
-                class="toko-circle mb-3">
-        </a>
-        <h5 class="fw-bold">{{ $t->nama_toko }}</h5>
+        @forelse ($tokos as $t)
+        <div class="col-md-3 mb-4 text-center">
+            <a href="{{ route('member.toko.detail', $t->id) }}">
+                <img src="{{ asset('storage/logotoko/'.$t->gambar) }}" class="toko-circle mb-3">
+            </a>
+            <h5 class="fw-bold">{{ $t->nama_toko }}</h5>
+            <p class="small text-white">{{ $t->deskripsi }}</p>
+        </div>
+        @empty
+        <div class="col-12 text-center">
+            <p class="text-muted">Belum ada toko tersedia.</p>
+        </div>
+        @endforelse
     </div>
-    @empty
-    <div class="col-12 text-center">
-        <p class="text-muted">Belum ada toko tersedia.</p>
-    </div>
-    @endforelse
+
+    {{-- FILTER PRODUK --}}
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+        <h4 class="fw-bold">Produk Terbaru</h4>
+        <form action="{{ route('user.dashboard') }}" method="GET" class="mb-3">
+            <select name="kategori_id" class="form-select" onchange="this.form.submit()">
+            <option value="">Semua Kategori</option>
+                @foreach($kategori as $k)
+                    <option value="{{ $k->id }}" {{ ($kategori_id == $k->id) ? 'selected' : '' }}>
+                        {{ $k->nama_katgori }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
     </div>
 
     {{-- PRODUK TERBARU --}}
-    <h4 class="mt-5 mb-3 fw-bold">Produk Terbaru</h4>
     <div class="row">
         @forelse ($produks as $p)
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm">
-                <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="card-img-top">
+                @if($p->Gambar->count() > 0)
+                    <img src="{{ asset('storage/imageproduk/'.$p->Gambar->first()->path_gambar) }}" class="card-img-top">
+                @else
+                    <img src="{{ asset('assets/no-image.png') }}" class="card-img-top">
+                @endif
                 <div class="card-body">
                     <h6 class="fw-bold">{{ $p->nama_produk }}</h6>
                     <p class="text-muted small mb-1">Toko: {{ $p->toko->nama_toko }}</p>
                     <p class="text-primary fw-bold">Rp {{ number_format($p->harga_produk, 0, ',', '.') }}</p>
-                    <a href="{{route('produk.detail',$p->id)}}" class="btn btn-outline-primary w-100">Detail Produk</a>
+                    <a href="{{ route('produk.detail', $p->id) }}" class="btn btn-outline-primary w-100">Detail Produk</a>
                 </div>
             </div>
         </div>
@@ -148,6 +175,5 @@
     </div>
 
 </div>
-
 
 @endsection

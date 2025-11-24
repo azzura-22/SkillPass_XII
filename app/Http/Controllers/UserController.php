@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\Toko;
 use Illuminate\Http\Request;
@@ -9,14 +10,21 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     //
-    public function memberHome(){
-    $data['tokos'] = Toko::latest()->where('status','active')->take(9)->get();
+    public function memberHome(Request $request){
+    $kategori_id = $request->query('kategori_id');
 
-    $data['produks'] = Produk::with(['toko', 'kategori', 'Gambar'])
-                              ->latest()
-                              ->get();
+    // Ambil produk dengan filter jika ada kategori_id
+    $produksQuery = Produk::with(['Gambar', 'toko', 'kategori'])->latest();
 
-    return view('user.home', $data);
+    if ($kategori_id) {
+        $produksQuery->where('kategori_id', $kategori_id);
+    }
+
+    $produks = $produksQuery->take(8)->get();
+    $tokos = Toko::latest()->take(4)->get();
+    $kategori = Kategori::all();
+
+    return view('user.home', compact('produks', 'tokos', 'kategori', 'kategori_id'));
     }
 
     public function toko($id){
@@ -25,6 +33,7 @@ class UserController extends Controller
 
         return view('user.tokodetail', compact('toko', 'produks'));
     }
+    
     public function produk(){
         $data['produks'] = Produk::with(['toko', 'kategori', 'Gambar'])
                                   ->latest()
