@@ -43,6 +43,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/member/gambar/tambah', [GambarController::class, 'gambartambah'])->name('gambar.tambah');
     Route::post('/member/gambar/ubah/{id}', [GambarController::class, 'gambarUbah'])->name('gambar.ubah');
     Route::get('/member/gambar/hapus/{id}', [GambarController::class, 'gambarHapus'])->name('gambar.hapus');
+    Route::put('/admin/produk/update',[ProdukController::class,'upadmin'])->name('admin.produk.update');
 });
 Route::middleware(['member'])->group(function(){
     Route::get('/member/dashboard',[memberController::class,'dashboard'])->name('member.dahboard');

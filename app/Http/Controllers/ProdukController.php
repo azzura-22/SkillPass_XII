@@ -110,4 +110,25 @@ public function show($id)
 
     return view('user.detainProduk', compact('produk', 'toko', 'allProdukToko'));
 }
+public function upadmin (Request $request){
+    $request->validate([
+        'id'             => 'required|exists:produks,id',
+        'nama_produk'   => 'required|string|max:255',
+        'kategori_id'   => 'required|exists:kategoris,id',
+        'harga_produk'  => 'required|numeric',
+        'stok'          => 'required|integer',
+        'deskripsi_produk' => 'required|string',
+    ]);
+
+    $produk = Produk::find($request->id);
+    $produk->update([
+        'nama_produk'       => $request->nama_produk,
+        'kategori_id'       => $request->kategori_id,
+        'harga_produk'      => $request->harga_produk,
+        'stok'              => $request->stok,
+        'deskripsi_produk'  => $request->deskripsi_produk,
+    ]);
+
+    return redirect()->back()->with('success', 'Produk berhasil diupdate!');
+}
 }

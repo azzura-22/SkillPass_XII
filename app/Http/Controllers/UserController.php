@@ -21,7 +21,7 @@ class UserController extends Controller
     }
 
     $produks = $produksQuery->take(8)->get();
-    $tokos = Toko::latest()->take(4)->get();
+    $tokos = Toko::latest()->take(4)->where('status','active')->get();
     $kategori = Kategori::all();
 
     return view('user.home', compact('produks', 'tokos', 'kategori', 'kategori_id'));
@@ -33,7 +33,7 @@ class UserController extends Controller
 
         return view('user.tokodetail', compact('toko', 'produks'));
     }
-    
+
     public function produk(){
         $data['produks'] = Produk::with(['toko', 'kategori', 'Gambar'])
                                   ->latest()

@@ -16,6 +16,8 @@ class adminController extends Controller
     //
     public function dashboard(){
         $data['users'] = User::count();
+        $data['produk'] = Produk::count();
+        $data['toko'] = Toko::count();
         return view('admin.dashboard',$data);
     }
     public function userA(){
@@ -118,7 +120,7 @@ class adminController extends Controller
 
         return view('admin.kategori', compact('kategori', 'kategoriEdit'));
     }
-    
+
     public function produk(){
         $data['produks'] = Produk::with('Kategori','Toko')->get();
         $data['kategori'] = Kategori::all();

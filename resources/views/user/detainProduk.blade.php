@@ -19,14 +19,14 @@
         border-radius: 15px;
     }
 
-    .thumbnail-images {
+    .tumnail-images {
         margin-top: 10px;
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
     }
 
-    .thumbnail-images img {
+    .tumnail-images img {
         width: 80px;
         height: 80px;
         object-fit: cover;
@@ -36,7 +36,7 @@
         transition: transform 0.2s, border-color 0.2s;
     }
 
-    .thumbnail-images img:hover {
+    .tumnail-images img:hover {
         transform: scale(1.05);
         border-color: #0d6efd;
     }
@@ -64,14 +64,11 @@
 
 <div class="container product-detail">
     <div class="row">
-        {{-- Gambar Produk --}}
         <div class="col-md-6 product-images mb-3">
             @if($produk->Gambar->count() > 0)
-                {{-- Gambar utama --}}
                 <img id="mainImage" src="{{ asset('storage/imageproduk/'.$produk->Gambar->first()->path_gambar) }}" alt="{{ $produk->nama_produk }}">
 
-                {{-- Thumbnails --}}
-                <div class="thumbnail-images mt-2">
+                <div class="tumnail-images mt-2">
                     @foreach($produk->Gambar as $g)
                         <img src="{{ asset('storage/imageproduk/'.$g->path_gambar) }}" onclick="document.getElementById('mainImage').src=this.src;">
                     @endforeach
@@ -81,7 +78,7 @@
             @endif
         </div>
 
-        {{-- Info Produk --}}
+        {{-- data produk --}}
         <div class="col-md-6 product-info">
             <h2>{{ $produk->nama_produk }}</h2>
             <p class="price">Rp {{ number_format($produk->harga_produk, 0, ',', '.') }}</p>
@@ -94,7 +91,6 @@
         </div>
     </div>
 
-    {{-- Produk Lain dari Toko Sama --}}
     <h4 class="mt-5 mb-3">Produk Lain dari {{ $produk->toko->nama_toko }}</h4>
     <div class="row">
         @forelse ($allProdukToko as $p)

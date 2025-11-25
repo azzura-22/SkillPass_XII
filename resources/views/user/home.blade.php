@@ -90,12 +90,10 @@
         object-fit: cover;
     }
 
-    /* Heading */
     h4, h5, h6, p, a {
         color: #ffffff;
     }
 
-    /* Filter Dropdown */
     .filter-form select {
         background-color: #333;
         color: #fff;
@@ -134,7 +132,6 @@
         @endforelse
     </div>
 
-    {{-- FILTER PRODUK --}}
     <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
         <h4 class="fw-bold">Produk Terbaru</h4>
         <form action="{{ route('user.dashboard') }}" method="GET" class="mb-3">
@@ -149,7 +146,7 @@
         </form>
     </div>
 
-    {{-- PRODUK TERBARU --}}
+    {{-- Produk terbaru --}}
     <div class="row">
         @forelse ($produks as $p)
         <div class="col-md-3 mb-4">

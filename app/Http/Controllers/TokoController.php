@@ -115,7 +115,7 @@ class TokoController extends Controller
     }
 
     public function toko(){
-        $data['tokos'] = Toko::all();
+        $data['tokos'] = Toko::where('status','active')->get();
         return view('user.toko',$data);
     }
 }

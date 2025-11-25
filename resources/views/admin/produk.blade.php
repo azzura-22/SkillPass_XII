@@ -85,7 +85,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                       </div>
 
-                      <form action="{{ route('produk.update') }}" method="POST">
+                      <form action="{{ route('admin.produk.update') }}" method="POST">
                         @csrf
                         @method('PUT')
 

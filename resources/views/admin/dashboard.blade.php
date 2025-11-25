@@ -3,7 +3,8 @@
 @section('content')
 @csrf
 <div class="container mt-4">
-    <div class="col-md-3 mb-4">
+    <div class="row">
+        <div class="col-md-3 mb-4">
             <div class="card text-white bg-primary shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -16,5 +17,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title mb-0">produk</h5>
+                            <h2 class="mt-2">{{ $produk }}</h2>
+                        </div>
+                        <i class="fa-solid fa-toolbox fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title mb-0">toko</h5>
+                            <h2 class="mt-2">{{ $toko }}</h2>
+                        </div>
+                        <i class="fa-solid fa-store fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

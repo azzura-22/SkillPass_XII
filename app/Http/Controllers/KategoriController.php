@@ -16,10 +16,11 @@ class KategoriController extends Controller
     }
     public function store (Request $request){
         $request -> validate([
-            'nama_katgori' => 'required'
+            'nama_kategori' => 'required'
         ]);
+
         Kategori::create([
-            'nama_katgori' => $request -> nama_katgori
+            'nama_katgori' => $request -> nama_kategori
         ]);
         return redirect() -> back() -> with ('success', 'Kategori Berhasil Ditambahkan');
     }

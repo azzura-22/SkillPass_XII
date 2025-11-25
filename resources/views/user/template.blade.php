@@ -41,13 +41,11 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        /* Search form */
         .form-control:focus {
             box-shadow: none;
             border-color: #0d6efd;
         }
 
-        /* Footer */
         footer {
             background-color: #1c1c1c;
         }
@@ -73,7 +71,6 @@
             border-color: #0d6efd;
         }
 
-        /* Produk card */
         .card {
             border-radius: 15px;
             overflow: hidden;
@@ -95,7 +92,6 @@
 </head>
 <body>
 
-{{-- NAVBAR USER --}}
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('user.dashboard') }}">AZZStore</a>
@@ -108,7 +104,6 @@
 
         <div class="collapse navbar-collapse" id="navbarUser">
 
-            {{-- MENU KIRI --}}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}"
@@ -126,7 +121,6 @@
                 </li>
             </ul>
 
-            {{-- SEARCH FORM --}}
             <form class="d-flex me-3" role="search" action="{{ route('user.search') }}" method="GET">
                 <input class="form-control me-2" type="search" name="q"
                        placeholder="Cari produk atau toko" aria-label="Search"
@@ -134,7 +128,6 @@
                 <button class="btn btn-outline-light" type="submit">Cari</button>
             </form>
 
-            {{-- MENU KANAN --}}
             <ul class="navbar-nav ms-auto">
                 @guest
                     <li class="nav-item">
@@ -164,12 +157,10 @@
     </div>
 </nav>
 
-{{-- CONTENT --}}
 <div class="container py-4">
     @yield('content')
 </div>
 
-{{-- FOOTER --}}
 <footer class="mt-5 pt-5 pb-4 text-white">
     <div class="container">
         <div class="row gy-4">
