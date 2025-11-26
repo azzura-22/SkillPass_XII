@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gambar;
+use App\Models\Produk;
 use App\Models\Toko;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ class TokoController extends Controller
     public function index()
     {
         $tokos = Toko::with('user')->get();  // mengambil relasi user
-        $users = User::all();   // untuk dropdown memilih pemilik toko
+        $users = User::all();
         return view('admin.toko', compact('tokos', 'users'));
     }
     public function store(Request $request)
@@ -29,7 +31,6 @@ class TokoController extends Controller
             'alamat'       => 'required'
         ]);
 
-        // Upload gambar
         $file = $request->file('gambar');
         $namaFile = time().'_'.$file->getClientOriginalName();
         $file->move(public_path('storage/image'), $namaFile);
@@ -63,7 +64,6 @@ class TokoController extends Controller
 
         $toko = Toko::findOrFail($request->id);
 
-        // Jika user upload gambar baru
         if ($request->hasFile('gambar')) {
 
             // hapus gambar lama
@@ -88,6 +88,10 @@ class TokoController extends Controller
     }
     public function delete($id)
     {
+        Gambar::whereHas('produk', function ($query) use ($id) {
+            $query->where('toko_id', $id);
+        })->delete();
+        $produk = Produk::Where('toko_id',$id)->delete();
         $toko = Toko::findOrFail($id);
 
         // hapus gambar

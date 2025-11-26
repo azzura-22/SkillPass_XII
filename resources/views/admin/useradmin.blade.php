@@ -104,7 +104,7 @@
 
                             <div class="mb-3">
                                 <label>Password (isi ulang)</label>
-                                <input type="password" name="password" value="{{ $u->password }}" class="form-control" required>
+                                <input type="password" name="password" value="" class="form-control" required>
                             </div>
 
                             <div class="mb-3">

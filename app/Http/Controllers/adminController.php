@@ -128,6 +128,7 @@ class adminController extends Controller
     }
 
     public function produkdelete($id){
+
         $produk = Produk::findOrFail($id);
 
         if ($produk->Gambar && $produk->Gambar->count() > 0) {
@@ -148,4 +149,5 @@ class adminController extends Controller
 
         return redirect()->back()->with('success', 'Produk berhasil dihapus!');
     }
+    
 }

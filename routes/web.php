@@ -18,6 +18,10 @@ Route::post('/login/post',[adminController::class,'login'])->name('login.post');
 Route::get('/regis',[adminController::class,'regisview'])->name('regis');
 Route::post('/register/post',[adminController::class,'register'])->name('register.post');
 Route::get('/produk',[UserController::class,'produk'])->name('user.produk');
+Route::get('/member/toko/detail/{id}',[UserController::class,'toko'])->name('member.toko.detail');
+Route::get('/produk/detail/{id}',[ProdukController::class,'show'])->name('produk.detail');
+Route::get('/user/toko',[TokoController::class,'toko'])->name('toko.user');
+Route::get('/search', [memberController::class, 'search'])->name('user.search');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [adminController::class, 'dashboard'])->name('admin.dashboard');
@@ -36,7 +40,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/toko/delete/{id}', [TokoController::class, 'delete'])->name('admin.toko.delete');
     Route::get('/edit/{id}', [adminController::class, 'edit'])->name('admin.kategori.edit');
     Route::get('/admin/produk', [adminController::class, 'produk'])->name('admin.produk');
-    Route::get('/admin/produk/delete/{id}', [adminController::class, 'deleteproduk'])->name('admin.produk.delete');
+    Route::get('/admin/produk/delete/{id}', [adminController::class, 'produkdelete'])->name('admin.produk.delete');
     Route::post('/admin/toko/approve/{id}', [TokoController::class, 'approve'])->name('member.approve.toko');
     Route::post('/admin/Toko/tolak/{id}',[TokoController::class,'reject'])->name('member.tolak.toko');
     Route::get('/admin/foto',[GambarController::class,'gambar'])->name('gambar.admin');
@@ -64,7 +68,3 @@ Route::middleware(['member'])->group(function(){
     Route::post('member/gambar/produk/{id}',[memberController::class,'addGambar'])->name('gambar.tambah');
     Route::get('/logout/user',[adminController::class,'logout'])->name('logout.user');
 });
-Route::get('/member/toko/detail/{id}',[UserController::class,'toko'])->name('member.toko.detail');
-Route::get('/produk/detail/{id}',[ProdukController::class,'show'])->name('produk.detail');
-Route::get('/user/toko',[TokoController::class,'toko'])->name('toko.user');
-Route::get('/search', [memberController::class, 'search'])->name('user.search');

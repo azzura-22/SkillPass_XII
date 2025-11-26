@@ -13,14 +13,13 @@ class UserController extends Controller
     public function memberHome(Request $request){
     $kategori_id = $request->query('kategori_id');
 
-    // Ambil produk dengan filter jika ada kategori_id
-    $produksQuery = Produk::with(['Gambar', 'toko', 'kategori'])->latest();
+    $fillkat = Produk::with(['Gambar', 'toko', 'kategori'])->latest();
 
     if ($kategori_id) {
-        $produksQuery->where('kategori_id', $kategori_id);
+        $fillkat->where('kategori_id', $kategori_id);
     }
 
-    $produks = $produksQuery->take(8)->get();
+    $produks = $fillkat->take(8)->get();
     $tokos = Toko::latest()->take(4)->where('status','active')->get();
     $kategori = Kategori::all();
 

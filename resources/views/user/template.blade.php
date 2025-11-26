@@ -57,8 +57,7 @@
             text-decoration: underline;
         }
 
-        /* Toko circle */
-        .toko-circle {
+        /* .toko-circle {
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -85,7 +84,7 @@
         .card img {
             height: 200px;
             object-fit: cover;
-        }
+        } */
     </style>
 
     @stack('styles')
@@ -180,15 +179,14 @@
                     <li><a href="{{ route('user.dashboard') }}">Beranda</a></li>
                     <li><a href="{{ route('user.produk') }}">Produk</a></li>
                     <li><a href="{{ route('toko.user') }}">Toko</a></li>
-                    <li><a href="#">Tentang Kami</a></li>
                 </ul>
             </div>
 
             <div class="col-md-4">
                 <h5 class="fw-bold mb-3">Kontak</h5>
                 <ul class="list-unstyled">
-                    <li><i class="fas fa-phone me-2"></i> +62 82315818637</li>
-                    <li><i class="fas fa-envelope me-2"></i> Fstore@gmail.com</li>
+                    <li><i class="fas fa-phone me-2"></i> +62 89526025545</li>
+                    <li><i class="fas fa-envelope me-2"></i> AZZstore@gmail.com</li>
                     <li><i class="fas fa-location-dot me-2"></i> Tasikmalaya, Indonesia</li>
                 </ul>
             </div>

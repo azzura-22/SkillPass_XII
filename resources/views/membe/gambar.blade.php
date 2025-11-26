@@ -35,9 +35,9 @@
                 </thead>
 
                 <tbody>
-                    @foreach($gambars as $gmbr)
+                    @foreach($gambars as $no => $gmbr)
                     <tr>
-                        <td>{{ $gmbr->id }}</td>
+                        <td>{{ $no+1 }}</td>
 
                         <td>
                             <img src="{{ asset('storage/imageproduk/' . $gmbr->path_gambar) }}"

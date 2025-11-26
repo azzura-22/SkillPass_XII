@@ -44,7 +44,7 @@
 
 <div class="container mt-4">
 
-    <h2 class="mb-4 fw-bold text-center">Toko Pilihan</h2>
+    <h2 class="mb-4 fw-bold text-center">semua toko</h2>
 
     <div class="row">
         @forelse ($tokos as $t)

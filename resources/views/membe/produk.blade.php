@@ -47,9 +47,9 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($produks as $p)
+            @foreach($produks as $no => $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $no+1 }}</td>
                     <td>
                         @if ($p->Gambar->count() > 0)
                             @foreach ($p->Gambar->take(4) as $g)

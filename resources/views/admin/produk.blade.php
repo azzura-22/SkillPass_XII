@@ -22,9 +22,9 @@
 
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Data Produk</h5>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProdukModal">
+        {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProdukModal">
             + Tambah Produk
-        </button>
+        </button> --}}
     </div>
 
     <div class="card-body table-responsive">

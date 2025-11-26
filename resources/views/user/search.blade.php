@@ -18,7 +18,9 @@
                 </div>
             </div>
         @empty
-            <div class="col-12 text-muted">Produk tidak ditemukan.</div>
+            <div class="col-12 text-muted">
+                <a style="color: white">Produk tidak ditemukan.</a>
+            </div>
         @endforelse
     </div>
 
@@ -32,7 +34,9 @@
                 <h6 class="fw-bold">{{ $t->nama_toko }}</h6>
             </div>
         @empty
-            <div class="col-12 text-muted">Toko tidak ditemukan.</div>
+            <div class="col-12 text-muted">
+                <a style="color: white">Toko tidak ditemukan.</a>
+            </div>
         @endforelse
     </div>
 </div>

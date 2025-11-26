@@ -6,27 +6,23 @@
     body {
         background: linear-gradient(to bottom, #4d4c4c, #000000);
         min-height: 100vh;
-        color: #ffffff; /* warna default teks putih */
+        color: #ffffff;
     }
 
-    /* Override untuk teks di dalam hero */
     .benner, .benner h2, .benner p, .benner a {
         color: #ffffff;
     }
 
-    /* Override teks toko */
     .toko-circle + h5 {
         color: #ffffff;
     }
 
-    /* Override teks produk */
     .card h6,
     .card p,
     .card a {
         color: #ffffff !important;
     }
 
-    /* Hero */
     .benner {
         background: url('/assets/banner.jpg') center/cover no-repeat;
         padding: 100px 20px;
@@ -74,12 +70,11 @@
         border-color: #007bff;
     }
 
-    /* PRODUK CARD */
     .card {
         border-radius: 15px;
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
-        background-color: rgba(255,255,255,0.05); /* semi-transparent card agar tetap terlihat */
+        background-color: rgba(255,255,255,0.05);
     }
     .card:hover {
         transform: translateY(-5px);
@@ -146,7 +141,6 @@
         </form>
     </div>
 
-    {{-- Produk terbaru --}}
     <div class="row">
         @forelse ($produks as $p)
         <div class="col-md-3 mb-4">
@@ -166,7 +160,9 @@
         </div>
         @empty
         <div class="col-12 text-center text-muted">
-            Belum ada produk tersedia.
+            <h4>
+                Belum ada produk tersedia.
+            </h4>
         </div>
         @endforelse
     </div>

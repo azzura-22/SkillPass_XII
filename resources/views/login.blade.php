@@ -82,6 +82,10 @@
             <div class="text-center mt-3">
                 <a href="{{route('regis')}}" class="text-decoration-none">Buat akun</a>
             </div>
+
+            <div class="text-center mt-3">
+                <a href="{{route('user.dashboard')}}" class="text-decoration-none">kembali kehalaman beranda</a>
+            </div>
         </form>
     </div>
 

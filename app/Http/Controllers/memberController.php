@@ -138,15 +138,12 @@ class memberController extends Controller
     {
         $q = $request->input('q');
 
-        // Cari produk berdasarkan nama
         $produks = Produk::with('toko', 'Gambar')
             ->where('nama_produk', 'like', "%$q%")
             ->get();
 
-        // Cari toko berdasarkan nama
         $tokos = Toko::where('nama_toko', 'like', "%$q%")
             ->get();
-
         return view('user.search', compact('produks', 'tokos', 'q'));
     }
 }
